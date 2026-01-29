@@ -1,0 +1,51 @@
+<nav class="flex items-center justify-between bg-gray-800 border border-white rounded-full px-4 py-1 w-fit mx-auto">
+  <!-- Left Circle Button with P (Profile) -->
+  <a
+    routerLink="/profile"
+    routerLinkActive="active"
+    [ngClass]="{
+      'bg-black text-white': isActive('/profile'),
+      'bg-white text-black': !isActive('/profile')
+    }"
+    class="w-6 h-6 rounded-full border border-white flex items-center justify-center text-sm font-bold"
+  >
+    P
+  </a>
+
+  <!-- Navigation Tabs -->
+  <div class="flex gap-3 px-4">
+    <a
+      routerLink="/dashboard"
+      [ngClass]="{
+        'bg-black text-white': isActive('/dashboard'),
+        'bg-white text-black': !isActive('/dashboard')
+      }"
+      class="px-5 py-1 rounded-full border border-white text-sm font-medium"
+    >
+      Dashboard
+    </a>
+
+    <a
+      routerLink="/discover"
+      [ngClass]="{
+        'bg-black text-white': isActive('/discover'),
+        'bg-white text-black': !isActive('/discover')
+      }"
+      class="px-5 py-1 rounded-full border border-white text-sm font-medium"
+    >
+      Discover
+    </a>
+  </div>
+
+  <!-- Right Add Button with + (Collection Import)
+  <a
+    routerLink="/collection-import"
+    [ngClass]="{
+      'bg-black text-white': isActive('/collection-import'),
+      'bg-white text-black': !isActive('/collection-import')
+    }"
+    class="w-6 h-6 rounded-full border border-white flex items-center justify-center text-sm font-bold"
+  >
+    +
+  </a> -->
+</nav>

@@ -1,0 +1,88 @@
+<!-- Contenedor general -->
+<div class="max-w-sm mx-auto p-6 bg-gray-950 rounded-xl shadow text-center relative text-gray-100 space-y-5">
+
+  <!-- Botón de cerrar -->
+  <button
+    class="absolute top-2 right-3 text-gray-400 hover:text-white text-xl"
+    (click)="resolved.emit('cancel')"
+    aria-label="Close"
+  >
+    ✕
+  </button>
+
+  <!-- Título -->
+  <h2 class="text-lg font-semibold">Profile Conflict</h2>
+  <p class="text-sm text-gray-400">
+    Two versions of your profile were found. Choose which one to keep, or merge them into a new one.
+  </p>
+
+  <!-- Perfiles local y remoto -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-left">
+    <!-- Local -->
+    <div class="bg-gray-900 p-4 rounded-lg space-y-3 flex flex-col items-center">
+      <h3 class="text-center font-medium text-gray-200">Local Profile</h3>
+      <img
+        [src]="localProfile.avatarUrl"
+        alt="Local avatar"
+        class="w-16 h-16 rounded-full object-cover border border-gray-700"
+      />
+      <div class="w-full text-left space-y-1 mt-2">
+        <p><span class="text-gray-400">Name:</span> {{ localProfile.displayName }}</p>
+        <p><span class="text-gray-400">Games:</span> {{ localProfile.gameCollection.length }}</p>
+      </div>
+      <button
+        class="w-full mt-2 bg-black hover:bg-gray-800 text-white py-1.5 rounded transition border border-white"
+        (click)="resolved.emit('local')"
+      >
+        Use Local
+      </button>
+    </div>
+
+    <!-- Remote -->
+    <div class="bg-gray-900 p-4 rounded-lg space-y-3 flex flex-col items-center">
+      <h3 class="text-center font-medium text-gray-200">Remote Profile</h3>
+      <img
+        [src]="remoteProfile.avatarUrl"
+        alt="Remote avatar"
+        class="w-16 h-16 rounded-full object-cover border border-gray-700"
+      />
+      <div class="w-full text-left space-y-1 mt-2">
+        <p><span class="text-gray-400">Name:</span> {{ remoteProfile.displayName }}</p>
+        <p><span class="text-gray-400">Games:</span> {{ remoteProfile.gameCollection.length }}</p>
+      </div>
+      <button
+        class="w-full mt-2 bg-black hover:bg-gray-800 text-white py-1.5 rounded transition border border-white"
+        (click)="resolved.emit('remote')"
+      >
+        Use Remote
+      </button>
+    </div>
+  </div>
+
+  <!-- Sección Merged Preview -->
+  <div class="bg-gray-900 p-4 mt-6 rounded-lg space-y-3 flex flex-col items-center text-sm">
+    <h3 class="text-center font-medium text-gray-200">Preview: Merged Profile</h3>
+
+    <p class="text-xs text-yellow-400 text-center italic">
+      The merged profile will keep the <strong>local name and avatar</strong>, and combine all games.
+    </p>
+
+    <img
+      [src]="localProfile.avatarUrl"
+      alt="Merged avatar"
+      class="w-16 h-16 rounded-full object-cover border border-gray-700"
+    />
+
+    <div class="w-full text-left space-y-1 mt-2">
+      <p><span class="text-gray-400">Name:</span> {{ localProfile.displayName }}</p>
+      <p><span class="text-gray-400">Games:</span> {{ mergedGameCount }}</p>
+    </div>
+
+    <button
+      class="w-full mt-2 bg-black hover:bg-gray-800 text-white py-1.5 rounded transition border border-white"
+      (click)="resolved.emit('merge')"
+    >
+      Merge Profiles
+    </button>
+  </div>
+</div>

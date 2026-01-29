@@ -1,0 +1,54 @@
+<div class="flex items-center justify-center px-6 text-white">
+  <div class="bg-gray-900 rounded-3xl border border-white p-20 w-full max-w-7xl text-center shadow-xl relative space-y-20">
+
+    <button class="absolute top-8 right-10 text-white text-3xl hover:text-red-400"
+      (click)="close.emit()" aria-label="Close">✕</button>
+
+    <div class="flex flex-col items-center gap-12">
+      <app-item-card
+        [game]="game"
+        [loading]="loading"
+        (gameClicked)="openGameModal()"
+      ></app-item-card>
+
+      <button
+      class="w-16 h-16 border border-white rounded-full transition flex items-center justify-center shadow-md hover:shadow-lg duration-200"
+
+      (click)="requestNewRecommendation()"
+      [disabled]="loading"
+      [ngClass]="{
+        'text-white hover:bg-white hover:text-black cursor-pointer': !loading,
+        'text-gray-500': loading
+      }"
+      aria-label="New Recommendation"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        [ngClass]="{ 'animate-spin': loading }"
+        class="w-6 h-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M4.5 12a7.5 7.5 0 0112.3-5.7L19 3m0 0v5.25M19 3h-5.25M19.5 12a7.5 7.5 0 01-12.3 5.7L5 21m0 0v-5.25M5 21h5.25"
+        />
+      </svg>
+    </button>
+    </div>
+
+    <div class="bg-gray-800 border border-white rounded-2xl p-12 text-2xl leading-relaxed max-w-5xl mx-auto text-white">
+      {{ recommendation.reason }}
+    </div>
+  </div>
+
+  <!-- Game Modal interno -->
+  <div *ngIf="showGameModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black p-6 overflow-auto">
+    <div class="w-full max-w-[2000px] pointer-events-auto">
+      <app-game-modal [game]="game" (close)="closeGameModal()"></app-game-modal>
+    </div>
+  </div>
+</div>

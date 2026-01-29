@@ -1,0 +1,72 @@
+<div class="w-full text-white space-y-6 mt-16">
+  <!-- Encabezado -->
+  <div class="flex flex-col items-center text-center gap-2">
+    <div
+      class="cursor-pointer group"
+      (click)="handleTitleClick()"
+      [class.opacity-50]="allGames.length === 0"
+    >
+      <h2 class="text-2xl font-bold cursor-pointer">{{ title }}</h2>
+      <p *ngIf="subtitle" class="text-sm text-gray-400 cursor-pointer">
+        {{ subtitle }}
+      </p>
+    </div>
+  </div>
+
+  <!-- Lista de juegos -->
+  <div class="relative group">
+    <div class="flex flex-wrap justify-center gap-6">
+      <ng-container *ngIf="isLoading">
+        <app-item-card *ngFor="let i of loadingSlots" [loading]="true"></app-item-card>
+      </ng-container>
+
+      <ng-container *ngIf="!isLoading && visibleGames.length > 0">
+        <app-item-card
+          *ngFor="let game of visibleGames"
+          [game]="game"
+          [loading]="isRecommendationLoading"
+          (gameClicked)="openGameModal(game)"
+        ></app-item-card>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div
+    *ngIf="showModal && selectedGame"
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-6 overflow-auto"
+  >
+    <div class="w-full max-w-[2000px] pointer-events-auto">
+      <ng-container>
+        <app-game-modal
+          *ngIf="selectedGame && !selectedRecommendation"
+          [game]="selectedGame"
+          (close)="closeGameModal()"
+        ></app-game-modal>
+
+        <app-ai-modal
+        *ngIf="selectedRecommendation"
+        [recommendation]="recommendation!"
+        [loading]="isRecommendationLoading"
+        (requestNew)="requestNewRecommendation()"
+        (close)="closeGameModal()"
+      ></app-ai-modal>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- Search Modal -->
+  <div
+    *ngIf="showSearchModal"
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-6 overflow-auto"
+  >
+    <div class="w-full max-w-[2000px] pointer-events-auto">
+      <app-search-modal
+        [games]="allGames"
+        [initialFilters]="initialFilters"
+        [enablePagination]="source === 'remote'"
+        (close)="closeSearchModal()"
+      ></app-search-modal>
+    </div>
+  </div>
+</div>

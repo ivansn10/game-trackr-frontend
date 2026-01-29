@@ -1,0 +1,104 @@
+<div class="max-w-[2000px] min-h-[900px] mx-auto p-8 bg-gray-900 text-white rounded-3xl shadow-md border border-white space-y-8 relative">
+
+  <!-- Botón de cerrar -->
+  <button class="absolute top-4 right-4 text-white text-2xl" (click)="close.emit()">✕</button>
+
+  <!-- Header -->
+  <div class="text-center">
+    <h2 class="text-3xl font-bold">{{ game.gameTitle }}</h2>
+    <p class="text-base text-gray-400 mt-1">released on {{ game.releaseDate }}</p>
+
+    <!-- Estrellas SVG con zona invisible para poner 0 -->
+    <div class="mt-4 flex justify-center items-center gap-2 text-[48px]">
+      <div class="relative flex items-center">
+
+        <!-- Zona invisible para puntuar 0 con tooltip arriba -->
+        <div
+          class="relative w-10 h-12 cursor-pointer group"
+          style="margin-left: -40px"
+          (click)="setRating(0)"
+        >
+          <div class="absolute inset-0 opacity-0"></div>
+          <div
+            class="absolute bottom-full left-1/2 -translate-x-1/2 mb-0 px-2 py-1 text-sm text-white bg-gray-700 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition pointer-events-none z-50"
+          >
+            (0)
+          </div>
+        </div>
+
+        <!-- Estrellas visibles -->
+        <ng-container *ngFor="let star of [1,2,3,4,5]">
+          <div
+            class="w-12 h-12 cursor-pointer"
+            (mousemove)="setHoverFromMouse($event, star)"
+            (mouseleave)="clearHover()"
+            (click)="setRatingByMouse($event, star)"
+          >
+            <app-star-icon
+              [filled]="getStarFillPercentage(star) === 100"
+              [half]="getStarFillPercentage(star) === 50"
+            />
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <!-- Imagen + Descripción -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+    <div class="flex justify-center md:justify-start">
+      <div class="w-[400px] h-[550px] bg-gray-700 rounded-2xl flex items-center justify-center text-gray-300 text-xl font-semibold border-2 border-white">
+        <img
+          *ngIf="game.imageUrl; else placeholder"
+          [src]="game.imageUrl"
+          class="w-full h-full object-cover rounded-2xl"
+        />
+        <ng-template #placeholder>Image</ng-template>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-center">
+      <div class="bg-gray-800 rounded-2xl p-6 text-base text-gray-200 leading-loose w-full text-center">
+        {{ game.description || 'No description available.' }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Genres, Status, Platforms -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center mt-40">
+    <!-- Genres -->
+    <div class="border border-white rounded-2xl p-6 bg-gray-800">
+      <h4 class="text-xl font-semibold mb-4">Genres</h4>
+      <ul class="space-y-2 text-base text-gray-100">
+        <li *ngFor="let genre of game.genres || []" class="bg-gray-900 px-4 py-2 rounded-lg border border-white">
+          {{ genre }}
+        </li>
+      </ul>
+    </div>
+
+    <!-- Status -->
+    <div class="border border-white rounded-2xl p-6 bg-gray-800">
+      <h4 class="text-xl font-semibold mb-4">Status</h4>
+      <div class="relative">
+        <select
+          [(ngModel)]="game.status"
+          (ngModelChange)="onStatusChange($event)"
+          class="w-full border border-white rounded-lg px-4 py-3 text-base bg-gray-900 text-white text-center appearance-none focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+        >
+          <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
+        </select>
+        <div class="absolute right-3 top-3 pointer-events-none text-gray-400 text-lg">▼</div>
+      </div>
+    </div>
+
+    <!-- Platforms -->
+    <div class="border border-white rounded-2xl p-6 bg-gray-800">
+      <h4 class="text-xl font-semibold mb-4">Platforms</h4>
+      <ul class="space-y-2 text-base text-gray-100">
+        <li *ngFor="let platform of game.platforms || []" class="bg-gray-900 px-4 py-2 rounded-lg border border-white">
+          {{ platform }}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

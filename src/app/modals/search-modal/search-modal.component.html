@@ -1,0 +1,111 @@
+<!-- Layout principal del Search Modal -->
+<div
+  class="bg-gray-900 text-white p-6 grid grid-cols-[250px_1fr] gap-8 overflow-hidden rounded-3xl border border-white relative max-h-[90vh]"
+>
+  <!-- Botón de cerrar SearchModal -->
+  <button
+    class="absolute top-4 right-4 text-white text-2xl font-bold hover:text-red-400 z-10"
+    (click)="handleClose()"
+  >
+    ✕
+  </button>
+
+  <!-- Sidebar de filtros -->
+  <div
+    class="bg-gray-800 border border-white rounded-2xl p-4 space-y-6 w-64 self-start overflow-y-auto max-h-[calc(90vh-48px)] mt-10"
+  >
+    <div class="space-y-2">
+      <label class="block text-sm font-semibold">Name</label>
+      <input
+        type="text"
+        [(ngModel)]="name"
+        class="w-full rounded-lg border border-white bg-gray-900 px-3 py-2 text-white"
+      />
+    </div>
+
+    <div class="space-y-2">
+      <label class="block text-sm font-semibold">Genre</label>
+      <select
+        class="w-full rounded-lg border border-white bg-gray-900 px-3 py-2 text-white"
+        [(ngModel)]="selectedGenre"
+      >
+        <option value="Any">Any</option>
+        <option *ngFor="let genre of genres" [value]="genre">
+          {{ genre }}
+        </option>
+      </select>
+    </div>
+
+    <div class="space-y-2">
+      <label class="block text-sm font-semibold">Platform</label>
+      <select
+        class="w-full rounded-lg border border-white bg-gray-900 px-3 py-2 text-white"
+        [(ngModel)]="selectedPlatform"
+      >
+        <option value="Any">Any</option>
+        <option *ngFor="let platform of platforms" [value]="platform">
+          {{ platform }}
+        </option>
+      </select>
+    </div>
+
+    <div class="space-y-2">
+      <label class="block text-sm font-semibold">Release From</label>
+      <input
+        type="date"
+        [(ngModel)]="releaseFrom"
+        class="w-full rounded-lg border border-white bg-gray-900 px-3 py-2 text-white"
+      />
+    </div>
+
+    <div class="space-y-2">
+      <label class="block text-sm font-semibold">Release To</label>
+      <input
+        type="date"
+        [(ngModel)]="releaseTo"
+        class="w-full rounded-lg border border-white bg-gray-900 px-3 py-2 text-white"
+      />
+    </div>
+
+    <div class="space-y-2 pt-2">
+      <button
+        class="w-full cursor-pointer border border-white rounded-xl py-2 font-medium bg-gray-900"
+        (click)="clearFilters()"
+      >
+        Clear
+      </button>
+      <button
+        (click)="applyFilters()"
+        class="w-full cursor-pointer border border-white rounded-xl py-2 font-medium bg-white text-black"
+      >
+        Apply
+      </button>
+    </div>
+  </div>
+
+  <!-- Grid de juegos con scroll interno y desplazado hacia abajo -->
+  <div
+  class="mt-10 px-4 py-2 pb-6 overflow-y-auto max-h-[calc(90vh-6rem)]"
+  (scroll)="onDivScroll($event)"
+>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <app-item-card
+      *ngFor="let game of filteredGames"
+      [game]="game"
+      (gameClicked)="openGameModal(game)"
+    ></app-item-card>
+  </div>
+</div>
+
+<!-- Game Modal (encima del Search Modal) -->
+<div
+  *ngIf="showGameModal && selectedGame"
+  class="fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-50 p-6 overflow-auto"
+>
+  <div class="w-full max-w-[2000px] pointer-events-auto">
+    <app-game-modal
+      [game]="selectedGame"
+      (close)="closeGameModal()"
+    ></app-game-modal>
+  </div>
+</div>

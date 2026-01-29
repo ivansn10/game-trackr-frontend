@@ -1,0 +1,65 @@
+<div class="bg-gray-900 text-white rounded-3xl border border-white shadow p-8 max-w-md w-full text-center relative space-y-6">
+
+  <!-- Botón de cerrar -->
+  <button
+    class="absolute top-4 right-5 text-white text-xl hover:text-red-400"
+    (click)="close.emit()"
+    aria-label="Close"
+  >
+    ✕
+  </button>
+
+  <!-- Título -->
+  <h2 class="text-2xl font-bold">
+    {{ mode === 'name' ? 'Edit Name' : 'Change Avatar' }}
+  </h2>
+
+  <!-- Editar nombre -->
+  <div *ngIf="mode === 'name'" class="space-y-4">
+    <input
+      type="text"
+      [(ngModel)]="newName"
+      placeholder="Enter new name"
+      class="w-full bg-gray-800 border border-white rounded-lg px-4 py-2 text-white text-center"
+    />
+  </div>
+
+  <!-- Subir imagen (avatar) -->
+  <div *ngIf="mode === 'avatar'" class="flex flex-col items-center gap-4 pt-2">
+    <!-- Imagen preview -->
+    <div
+      class="w-32 h-32 rounded-full bg-gray-700 flex items-center justify-center text-gray-400 text-4xl overflow-hidden border border-white"
+    >
+      <img
+        *ngIf="selectedImageUrl"
+        [src]="selectedImageUrl"
+        class="w-full h-full object-cover"
+        alt="Avatar preview"
+      />
+      <span *ngIf="!selectedImageUrl">👤</span>
+    </div>
+
+    <!-- Botón subir archivo -->
+    <label
+      for="avatarInput"
+      class="cursor-pointer px-6 py-2 bg-gray-800 border border-white rounded-lg hover:bg-gray-700 transition"
+    >
+      Choose image
+    </label>
+    <input
+      id="avatarInput"
+      type="file"
+      accept="image/*"
+      (change)="handleImageChange($event)"
+      class="hidden"
+    />
+  </div>
+
+  <!-- Botón de acción -->
+  <button
+    class="mt-4 w-full border border-white rounded-xl py-3 text-lg font-semibold hover:bg-white hover:text-black transition"
+    (click)="saveChanges()"
+  >
+    Save
+  </button>
+</div>

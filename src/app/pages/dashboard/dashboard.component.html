@@ -1,0 +1,26 @@
+<div class="max-w-[1600px] mx-auto p-6 bg-gray-900 text-white mt-2 space-y-24">
+  <!-- Sección Collection (fila completa arriba) -->
+  <app-item-section
+    [title]="'Collection'"
+    [source]="'profile'"
+    [status]="'collection'"
+    [maxVisible]="3"
+  ></app-item-section>
+
+  <!-- Grid inferior de 2 columnas para Playing y Wishlist -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <app-item-section
+      [title]="'Playing'"
+      [source]="'profile'"
+      [status]="'Playing'"
+      [maxVisible]="2"
+    ></app-item-section>
+
+    <app-item-section
+      [title]="'Wishlist'"
+      [source]="'profile'"
+      [status]="'Wishlist'"
+      [maxVisible]="2"
+    ></app-item-section>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<div class="max-w-[1600px] mx-auto p-6 bg-gray-900 text-white mt-2">
+
+  <!-- All games -->
+  <app-item-section
+    [title]="'All games'"
+    [games]="allGames"
+    [source]="'remote'"
+    [maxVisible]="3"
+  ></app-item-section>
+
+  <!-- Bottom 3 sections -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-24">
+    <app-item-section
+      [title]="'Coming soon'"
+      [games]="comingGames"
+      [source]="'remote'"
+      [maxVisible]="1"
+      [initialFilters]="{ releaseFrom: today, releaseTo: comingDate }"
+    ></app-item-section>
+
+    <app-item-section
+      [title]="'Recommended'"
+      [games]="recommended ? [recommended.game] : []"
+      [source]="'remote'"
+      [modalType]="'ai'"
+      [maxVisible]="1"
+    ></app-item-section>
+
+    <app-item-section
+      [title]="'Recently released'"
+      [games]="recentGames"
+      [source]="'remote'"
+      [maxVisible]="1"
+      [initialFilters]="{ releaseFrom: recentDate, releaseTo: today }"
+    ></app-item-section>
+  </div>
+</div>

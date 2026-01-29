@@ -1,0 +1,158 @@
+<!-- Profile oscuro y centrado -->
+<div class="my-40 flex justify-center" *ngIf="user$ | async as user">
+  <div class="w-full md:w-[50%]">
+    <!-- Tarjeta principal -->
+    <div class="relative p-10 bg-gray-900 text-white rounded-3xl shadow-md border border-white space-y-10">
+
+      <!-- Avatar y nombre -->
+      <div class="flex flex-col items-center gap-6">
+        <div class="relative">
+          <div
+            class="w-32 h-32 rounded-full bg-gray-700 flex items-center justify-center text-gray-300 text-4xl font-bold cursor-pointer overflow-hidden"
+            (click)="openProfileModal('avatar')"
+          >
+            <img
+              *ngIf="user.avatarUrl"
+              [src]="user.avatarUrl"
+              alt="Avatar"
+              class="w-full h-full object-cover rounded-full border-2 border-white"
+            />
+          </div>
+          <button
+            class="absolute -bottom-3 right-0 text-base text-white no-underline cursor-pointer"
+            (click)="openProfileModal('avatar')"
+          >
+            EDIT
+          </button>
+        </div>
+        <div class="flex flex-col items-center">
+          <p class="font-semibold text-white text-3xl cursor-pointer" (click)="openProfileModal('name')">
+            {{ user.displayName }}
+          </p>
+          <button
+            class="text-base text-white no-underline cursor-pointer"
+            (click)="openProfileModal('name')"
+          >
+            EDIT
+          </button>
+        </div>
+      </div>
+
+      <!-- Secciones Account y Data -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 text-center text-lg">
+        <!-- Account -->
+        <div class="border border-white rounded-2xl p-8 bg-gray-800 space-y-6">
+          <h4 class="font-semibold text-white text-2xl">Sync</h4>
+
+          <!-- Si NO está logueado -->
+          <ng-container *ngIf="(isLoggedIn$ | async) === false">
+            <button
+              class="w-full bg-gray-900 border border-white rounded-xl px-6 py-4 text-white cursor-pointer"
+              (click)="openAuthModal('login')"
+            >
+              Login
+            </button>
+            <button
+              class="w-full bg-gray-900 border border-white rounded-xl px-6 py-4 text-white cursor-pointer"
+              (click)="openAuthModal('signup')"
+            >
+              Sign up
+            </button>
+          </ng-container>
+
+          <!-- Si está logueado -->
+          <ng-container *ngIf="(isLoggedIn$ | async) === true">
+            <button
+              class="w-full bg-gray-900 border border-white rounded-xl px-6 py-4 text-white cursor-pointer"
+              (click)="handleLogout()"
+            >
+              Log out
+            </button>
+            <button
+              class="w-full bg-gray-900 border border-red-500 rounded-xl px-6 py-4 text-red-400 cursor-pointer"
+              (click)="handleDeleteAccount()"
+            >
+              Delete account
+            </button>
+          </ng-container>
+        </div>
+
+        <!-- Data -->
+        <div class="border border-white rounded-2xl p-8 bg-gray-800 space-y-6">
+          <h4 class="font-semibold text-white text-2xl">Data</h4>
+          <button
+            class="w-full bg-gray-900 border border-white rounded-xl px-6 py-4 text-white cursor-pointer"
+            (click)="openDataModal('export')"
+          >
+            Export
+          </button>
+          <button
+            class="w-full bg-gray-900 border border-white rounded-xl px-6 py-4 text-white cursor-pointer"
+            (click)="openDataModal('import')"
+          >
+            Import
+          </button>
+          <button
+            class="w-full bg-gray-900 border border-red-500 rounded-xl px-6 py-4 text-red-400 cursor-pointer"
+            (click)="openDataModal('delete')"
+          >
+            Reset data
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de login/signup -->
+<div
+  *ngIf="showAuthModal"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-6 overflow-auto"
+>
+  <div class="w-full max-w-sm pointer-events-auto">
+    <app-account-modal
+      [isSignupMode]="isSignupMode"
+      (close)="closeAuthModal($event)"
+    ></app-account-modal>
+  </div>
+</div>
+
+<!-- Modal de data-management -->
+<div
+  *ngIf="showDataModal"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-6 overflow-auto"
+>
+  <div class="w-full max-w-sm pointer-events-auto">
+    <app-data-management-modal
+      [mode]="dataModalMode"
+      (close)="closeDataModal()"
+    ></app-data-management-modal>
+  </div>
+</div>
+
+<!-- Modal de edición de perfil -->
+<div
+  *ngIf="showProfileModal"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-6 overflow-auto"
+>
+  <div class="w-full max-w-sm pointer-events-auto">
+    <app-profile-management-modal
+      [mode]="profileModalMode"
+      (close)="closeProfileModal()"
+    ></app-profile-management-modal>
+  </div>
+</div>
+
+<!-- Modal de resolución de conflictos -->
+<div
+  *ngIf="showConflictModal && localProfile && remoteProfile"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-6 overflow-auto"
+>
+  <div class="w-full max-w-sm pointer-events-auto">
+    <app-conflict-resolution-modal
+      [localProfile]="localProfile"
+      [remoteProfile]="remoteProfile"
+      (resolved)="resolveConflict($event)"
+    ></app-conflict-resolution-modal>
+  </div>
+</div>

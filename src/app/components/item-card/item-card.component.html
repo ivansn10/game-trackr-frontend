@@ -1,0 +1,47 @@
+<!-- Spinner si está cargando -->
+<div
+  *ngIf="loading"
+  class="w-64 h-80 rounded-xl border border-white overflow-hidden bg-gray-800 flex items-center justify-center"
+>
+  <svg
+    class="w-8 h-8 animate-spin text-white"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+  >
+    <circle
+      class="opacity-25"
+      cx="12"
+      cy="12"
+      r="10"
+      stroke="currentColor"
+      stroke-width="4"
+    ></circle>
+    <path
+      class="opacity-75"
+      fill="currentColor"
+      d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+    ></path>
+  </svg>
+</div>
+
+<!-- Contenedor visual del juego -->
+<div
+  *ngIf="!loading && game"
+  class="w-64 h-80 rounded-xl border border-white overflow-hidden bg-gray-800 cursor-pointer transform transition-transform duration-200 hover:scale-105"
+  (click)="onClick($event)"
+>
+  <ng-container *ngIf="game.imageUrl && game.imageUrl !== ''; else noImage">
+    <img
+      [src]="game.imageUrl"
+      [alt]="game.gameTitle"
+      class="w-full h-full object-cover"
+    />
+  </ng-container>
+
+  <ng-template #noImage>
+    <div class="w-full h-full flex items-center justify-center text-white bg-gray-700">
+      No image
+    </div>
+  </ng-template>
+</div>

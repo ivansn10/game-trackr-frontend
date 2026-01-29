@@ -1,39 +1,59 @@
-# Game Trackr - Frontend 🎮✨
+# GameTracker
 
-### **Final Degree Project | Computer Engineering**
+This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.4.
 
-This repository contains the frontend application for **Game Trackr**, a modern platform for video game management and discovery. Developed as my **Final Degree Project**, this application focuses on providing a fast, responsive, and intuitive user experience built with the latest web standards.
+## Development server
 
----
+To start a local development server, run:
 
-## 🎨 UI/UX & Features
+```bash
+ng serve
+```
 
-The frontend is designed to be a high-performance Single Page Application (SPA), integrating seamlessly with the .NET backend to provide real-time data and semantic search results.
+Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-* **Modern Angular Architecture**: Built with **Angular 19**, leveraging standalone components and the latest performance optimizations.
-* **Semantic Search Interface**: A dedicated interface for interacting with the **Weaviate** vector database through the API, allowing for conceptual game discovery.
-* **Reactive Design**: Responsive layouts powered by **Tailwind CSS 4**, ensuring a seamless experience across mobile, tablet, and desktop devices.
-* **State Management**: Efficient data handling using **RxJS** and Angular's latest reactivity patterns to ensure a smooth, lag-free UI.
-* **Dynamic Forms**: Robust game management and user input handling using Angular Reactive Forms.
+## Code scaffolding
 
-## 🛠️ Tech Stack
+Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
 
-| Component | Technology |
-| :--- | :--- |
-| **Framework** | Angular 19 |
-| **Styling** | Tailwind CSS 4 |
-| **Language** | TypeScript |
-| **State/Streams** | RxJS |
-| **Build Tool** | Angular CLI / Vite |
+```bash
+ng generate component component-name
+```
 
-## 🚀 Development Setup
+For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
 
-### **Prerequisites**
-* **Node.js**: Latest LTS version.
-* **Angular CLI**: Version 19 or higher.
+```bash
+ng generate --help
+```
 
-### **Installation**
-1. Clone the repository.
-2. Install dependencies:
-   ```bash
-   npm install
+## Building
+
+To build the project run:
+
+```bash
+ng build
+```
+
+This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+
+## Running unit tests
+
+To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+
+```bash
+ng test
+```
+
+## Running end-to-end tests
+
+For end-to-end (e2e) testing, run:
+
+```bash
+ng e2e
+```
+
+Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+
+## Additional Resources
+
+For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
