@@ -7,10 +7,10 @@ import { GameService } from './services/game-service/game-service.service';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, NavbarComponent],
-  templateUrl: './app.component.html',
+  templateUrl: './app.html',
   standalone: true,
 })
-export class AppComponent {
+export class App {
   title = 'game-tracker';
 
   constructor(private userProfile: UserProfileService, private gameService: GameService) {}
